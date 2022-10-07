@@ -54,5 +54,6 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 
 @app.get('/all_user')
-def read_users():
-    pass
+def read_users(db: Session = Depends(get_db)):
+    all_users = crud.get_all_users(db)
+    return all_users
