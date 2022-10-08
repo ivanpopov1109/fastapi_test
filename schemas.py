@@ -28,5 +28,6 @@ class User(BaseModel):
 class UserCreate(UserBase):
     password: str
 
-print(User.schema())
+if __name__ == "__main__":
+    print(User.schema())
 
