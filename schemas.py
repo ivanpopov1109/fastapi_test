@@ -1,33 +1,23 @@
 from pydantic import BaseModel
 
 class BookBase(BaseModel):
+    id:int
     author: str
-    book_name: str | None = None
-
-
-class BookCreate(BookBase):
-    pass
-
-
-class Book(BookBase):
-    id: int
+    book_name: str
+    pages:str
     owner_id: int
 
-    class Config:
-        orm_mode = True
+
+
 
 class UserBase(BaseModel):
-    email: str
-
-class User(BaseModel):
     id: int
     name: str
     password: str
-    mail: int
+    mail: str
 
-class UserCreate(UserBase):
-    password: str
+
 
 if __name__ == "__main__":
-    print(User.schema())
+    pass
 

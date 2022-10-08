@@ -14,7 +14,7 @@ class User(Base):
     mail = Column(String, unique = True)
     books = relationship("Books", back_populates="owner")
 
-class Books(Base):
+class Book(Base):
     __tablename__ = 'books'
 
     id = Column(Integer, primary_key=True, index=True)

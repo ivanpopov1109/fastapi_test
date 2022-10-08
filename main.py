@@ -1,27 +1,19 @@
 from fastapi import  FastAPI
-from pydantic import BaseModel
-from crud import get_all_books, get_all_users
+
+from crud import get_all_books, get_all_users, new_book, new_user, get_user
+from schemas import *
 
 
 app = FastAPI()
 
-class BookShema(BaseModel):
-    title: int
-    description: str
-
-class UserSchema(BaseModel):
-    email: str
-    hashed_password: str
-    is_active: bool
+@app.post('/create_user/')
+def create_user(user: UserBase):
+    new_user(user)
 
 
-# @app.post('/user')
-# def create_user(user: UserSchema):
-#     return user
-#
-# @app.get('/book', response_model=list[BookShema])
-# def create_book(book: BookShema):
-#     return book
+@app.post('/create_book/')
+def create_book(book: BookBase):
+    new_book(book)
 
 @app.get('/books/')
 def books():
@@ -33,5 +25,9 @@ def users():
     res = get_all_users()
     return res
 
+@app.get('/users/{id}')
+def user(id:int):
+    res = get_user(id)
+    return res
 
 
