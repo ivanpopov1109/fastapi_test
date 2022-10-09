@@ -33,11 +33,12 @@ def get_all_users() -> list:
 
 def get_user(id):
     with engine.connect() as con:
-        res = con.execute('SELECT id FROM users WHERE id = :id', id)
-        # con.close()
+        res = con.execute('SELECT * FROM users WHERE id = :id', id)
+        res = [i for i in res]
     return res
 
 if __name__ == "__main__":
     res = get_user(1)
-    for i in res:
-        print(i)
+    for row in res:
+        print(row)
+
