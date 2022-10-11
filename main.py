@@ -6,21 +6,27 @@ from schemas import *
 
 app = FastAPI()
 
-@app.post('/create_user/')
+@app.post('/create_user/',
+          summary='Создание пользователя')
 def create_user(user: UserBase):
     new_user(user)
 
 
-@app.post('/create_book/')
+@app.post('/create_book/',
+          summary='Создание книги'
+          )
 def create_book(book: BookBase):
     new_book(book)
 
-@app.get('/books/')
+@app.get('/books/',
+         summary='Список кнег',
+         response_description='Все книги')
 def books():
     res = get_all_books()
     return res
 
-@app.get('/users/')
+@app.get('/users/', summary='Списко пользователей',
+         response_description='Все пользователи')
 def users():
     res = get_all_users()
     return res

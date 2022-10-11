@@ -31,11 +31,18 @@ def get_all_users() -> list:
     result = [row for row in engine.execute(sql)]
     return result
 
-def get_user(id):
+def get_user(id)-> list:
     with engine.connect() as con:
         res = con.execute('SELECT * FROM users WHERE id = :id', id)
         res = [i for i in res]
     return res
+
+def get_users_book(id)->list:
+    with engine.connect() as con:
+        res = con.execute('SELECT * FROM users WHERE id = :id', id)
+        res = [i for i in res]
+    return res
+
 
 if __name__ == "__main__":
     res = get_user(1)
