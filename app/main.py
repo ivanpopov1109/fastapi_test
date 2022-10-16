@@ -1,8 +1,7 @@
 from fastapi import  FastAPI
 
-from crud import get_all_books, get_all_users, new_book, new_user, get_user
-from schemas import *
-
+from app.crud.library import get_all_books, get_all_users, new_book, new_user, get_user
+from app.schemas.library import *
 
 app = FastAPI()
 

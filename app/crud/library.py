@@ -1,7 +1,5 @@
-import models
-from database import Base, engine
+from app.core.database import engine
 from sqlalchemy.sql import text
-from schemas import *
 
 
 # models.Base.metadata.create_all(bind=engine)

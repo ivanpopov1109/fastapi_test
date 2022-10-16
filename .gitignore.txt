@@ -1,2 +1,5 @@
 sql_app.db
 /fastapidoc_apps
+**/__pycache__
+/venv
+.idea
