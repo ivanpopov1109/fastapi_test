@@ -2,25 +2,22 @@
 
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+from app.core.db import Base
 
-from app.core.database import Base
+from app.core.db import Base
 
-class User(Base):
-    __tablename__ = 'users'
+class Users(Base):
 
-    id = Column(Integer, primary_key = True, index = True)
-    name = Column(String, unique = True, index = True)
+    name = Column(String(100), unique = True, nullable = False)
     password = Column(String)
-    mail = Column(String, unique = True)
+    mail = Column(String(50), unique = True)
     books = relationship("Books", back_populates="owner")
 
-class Book(Base):
-    __tablename__ = 'books'
+class Books(Base):
 
-    id = Column(Integer, primary_key=True, index=True)
-    author = Column(String, index = True)
-    book_name = Column(String)
-    pages  = Column(Integer)
+    author = Column(String(100), nullable = False)
+    book_name = Column(String(100), nullable = False)
+    pages  = Column(Integer, nullable = False)
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User", back_populates="books")
 

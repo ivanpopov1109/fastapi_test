@@ -1,9 +1,10 @@
 from fastapi import  FastAPI
-
+from app.core.config import settings
 from app.crud.library import get_all_books, get_all_users, new_book, new_user, get_user
 from app.schemas.library import *
 
-app = FastAPI()
+app = FastAPI(title=settings.app_title,
+              description=settings.description)
 
 @app.post('/create_user/',
           summary='Создание пользователя')
