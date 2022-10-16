@@ -12,6 +12,8 @@ class Users(Base):
     password = Column(String)
     mail = Column(String(50), unique = True)
     books = relationship("Books", back_populates="owner")
+    class Config:
+        orm_mode = True
 
 class Books(Base):
 
@@ -19,6 +21,6 @@ class Books(Base):
     book_name = Column(String(100), nullable = False)
     pages  = Column(Integer, nullable = False)
     owner_id = Column(Integer, ForeignKey("users.id"))
-    owner = relationship("User", back_populates="books")
+    owner = relationship("Users", back_populates="books")
 
 

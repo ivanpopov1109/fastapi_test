@@ -1,20 +1,20 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Optional
 
-class BookBase(BaseModel):
-    id:int
-    author: str
-    book_name: str
-    pages:str
+class BookCreate(BaseModel):
+
+    author: str = Field(..., min_length=1, max_length=100)
+    book_name: str= Field(..., min_length=1, max_length=100)
+    pages:int
     owner_id: int
 
 
 
+class UserCreate(BaseModel):
 
-class UserBase(BaseModel):
-    id: int
-    name: str
-    password: str
-    mail: str
+    name: str  = Field(..., min_length=1, max_length=100)
+    password: str  = Field(..., min_length=1, max_length=100)
+    mail: str  = Field(..., min_length=1, max_length=100)
 
 
 
