@@ -1,7 +1,0 @@
-
-создать миграцию
-alembic revision --autogenerate -m "First migration"
-
-применить миграцию
-alembic upgrade head
-
