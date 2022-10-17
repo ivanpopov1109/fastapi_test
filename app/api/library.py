@@ -1,11 +1,13 @@
 from fastapi import APIRouter, HTTPException
 
 from app.crud.library import create_user, get_user_id_by_name
-from app.schemas.library import UserCreate
+from app.schemas.library import UserCreate, UserDB
 
 router = APIRouter()
 
-@router.post('/users/')
+@router.post('/users/',
+             response_model= UserDB,
+             response_model_exclude_none=True)
 def create_new_user(
         user: UserCreate,
 ):

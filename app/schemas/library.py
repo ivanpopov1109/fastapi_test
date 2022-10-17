@@ -8,13 +8,24 @@ class BookCreate(BaseModel):
     pages:int
     owner_id: int
 
-
-
-class UserCreate(BaseModel):
+class UserBase(BaseModel):
 
     name: str  = Field(..., min_length=1, max_length=100)
-    password: str  = Field(..., min_length=1, max_length=100)
     mail: str  = Field(..., min_length=1, max_length=100)
+
+
+
+class UserCreate(UserBase):
+
+    password: str  = Field(..., min_length=1, max_length=100)
+
+class UserDB(UserBase):
+
+    id: int
+    mail: Optional[str]
+
+    class Config:
+        orm_mode = True
 
 
 
