@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException
 
-from app.crud.library import create_user, get_user_id_by_name
+from app.crud.library import create_user, get_user_id_by_name, read_all_users_from_db
 from app.schemas.library import UserCreate, UserDB
 
-router = APIRouter()
+
+router = APIRouter(prefix='/library',
+                   tags=['library'])
 
 @router.post('/users/',
              response_model= UserDB,
@@ -18,6 +20,12 @@ def create_new_user(
                             detail='Пользователь с таким именем существует')
     new_user = create_user(user)
     return new_user
+
+@router.get('/users/', response_model=list[UserDB],
+            response_model_exclude_none=True)
+def get_all_users():
+    all_users = read_all_users_from_db()
+    return all_users
 
 
 

@@ -21,6 +21,7 @@ def create_user(user: UserCreate):
         session.refresh(db_user)
     return db_user
 
+
 def get_user_id_by_name(user: str) -> Optional[int]:
     with SessionLocal() as session:
         # Получаем объект класса Result.
@@ -32,38 +33,17 @@ def get_user_id_by_name(user: str) -> Optional[int]:
         # Извлекаем из него конкретное значение.
         db_user_id = db_user_id.scalars().first()
     return db_user_id
-# def new_book(book):
-#     with engine.connect() as con:
-#         con.execute('INSERT INTO books values ( :id, :author,:book_name, :pages, :owner_id)',
-#                     (book.id, book.author, book.book_name , book.pages, book.owner_id))
-#         con.close()
-#
-#
-# def get_all_books():
-#     sql = text('SELECT * FROM books')
-#     result = [row for row in engine.execute(sql)]
-#     return result
-#
-# def get_all_users() -> list:
-#     sql = text('SELECT * FROM users')
-#     result = [row for row in engine.execute(sql)]
-#     return result
-#
-# def get_user(id)-> list:
-#     with engine.connect() as con:
-#         res = con.execute('SELECT * FROM users WHERE id = :id', id)
-#         res = [i for i in res]
-#     return res
-#
-# def get_users_book(id)->list:
-#     with engine.connect() as con:
-#         res = con.execute('SELECT * FROM users WHERE id = :id', id)
-#         res = [i for i in res]
-#     return res
+
+
+def read_all_users_from_db()->list[Users]:
+    with SessionLocal() as session:
+        all_users = session.execute(select(Users))
+        all_users = all_users.scalars().all()
+    return all_users
+
+
+
 
 
 if __name__ == "__main__":
-    res = get_user(1)
-    for row in res:
-        print(row)
-
+    read_all_users_from_db()

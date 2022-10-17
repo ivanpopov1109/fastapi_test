@@ -27,6 +27,10 @@ class UserDB(UserBase):
     class Config:
         orm_mode = True
 
+class UserUpdate(UserBase):
+    password: str = Field(..., min_length=1, max_length=100)
+
+
 
 
 if __name__ == "__main__":

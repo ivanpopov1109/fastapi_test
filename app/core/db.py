@@ -11,12 +11,22 @@ class PreBase:
     id = Column(Integer, primary_key=True)
 
 
+# базовый класс будущих моделей
+# В качестве основы для базового класса укажем класс PreBase
+Base = declarative_base(cls=PreBase)
+
 
 # создадим движок, передадим url из конфига
 engine = create_engine(settings.database_url)
 
 SessionLocal = sessionmaker(engine, class_= Session)
 
-# базовый класс будущих моделей
-# В качестве основы для базового класса укажем класс PreBase
-Base = declarative_base(cls=PreBase)
+
+
+#синхронный генератор сессий
+def get_session():
+    # Генератор с сессией передается в вызывающую функцию.
+    with SessionLocal() as session:
+        yield session
+        # Когда HTTP-запрос отработает - выполнение кода вернётся сюда,
+        # и при выходе из контекстного менеджера сессия будет закрыта.
