@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from app.crud.library import create_user, get_user_id_by_name, read_all_users_from_db
-from app.schemas.library import UserCreate, UserDB
+from app.crud.library import create_user, get_user_id_by_name, read_all_users_from_db, get_user_by_id, update_user
+from app.schemas.library import UserCreate, UserDB, UserUpdate
 
 
 router = APIRouter(prefix='/library',

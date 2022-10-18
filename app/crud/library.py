@@ -1,16 +1,13 @@
 from app.core.db import engine, SessionLocal
 from sqlalchemy.sql import text
 from app.models.library import Books, Users
-from app.schemas.library import BookCreate, UserCreate
+from app.schemas.library import BookCreate, UserCreate, UserUpdate
 from typing import Optional
 from sqlalchemy import select
+from fastapi.encoders import jsonable_encoder
 
 
-# def new_user(user):
-#     with engine.connect() as con:
-#         con.execute('INSERT INTO users (id, name, password, mail ) values ( :id, :name,:password, :mail)',
-#                     (user.id, user.name, user.password, user.mail))
-#         con.close()
+
 
 def create_user(user: UserCreate):
     user_data = user.dict()
@@ -40,6 +37,42 @@ def read_all_users_from_db()->list[Users]:
         all_users = session.execute(select(Users))
         all_users = all_users.scalars().all()
     return all_users
+
+
+def get_user_by_id(user_id: int)-> Optional[Users]:
+    with SessionLocal() as session:
+        # Получаем объект класса Result.
+        db_user = session.execute(
+            select(Users).where(
+                Users.id == user_id
+            )
+        )
+        db_user = db_user.scalars().first()
+        return db_user
+
+def update_user(
+        # Объект из БД для обновления
+        db_user: Users,
+        # ОБъект из запроса
+        user_in: UserUpdate):
+    # Представляем объект из БД в виде словаря.
+    obj_data = jsonable_encoder(db_user)
+    # Конвертируем объект с данными из запроса в словарь,
+    # исключаем неустановленные пользователем поля.
+    update_data = user_in.dict(exclude_unset=True)
+    # Перебираем все ключи словаря, сформированного из БД-объекта.
+    for field in obj_data:
+        # Если конкретное поле есть в словаре с данными из запроса, то...
+        if field in update_data:
+            # ...устанавливаем объекту БД новое значение атрибута.
+            setattr(db_user, field, update_data[field])
+
+    with SessionLocal() as session:
+        session.add(db_user)
+        session.commit
+        session.refresh(db_user)
+        return db_user
+
 
 
 
