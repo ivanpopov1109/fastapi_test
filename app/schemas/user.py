@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 from typing import Optional
 
 
@@ -27,6 +27,12 @@ class UserDB(UserBase):
 
 
 class UserUpdate(UserBase):
+    @validator('password')
+    def pass_cannot_be_null(cls, value):
+        if value is None:
+            raise ValueError('Пароль не может быть пустым!')
+            return value
+
     password: Optional[str] = Field(None, min_length=1, max_length=100)
     name: Optional[str] = Field(None,  min_length=1, max_length=100)
     mail: Optional[str] = Field(None, min_length=1, max_length=100)

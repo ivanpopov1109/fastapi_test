@@ -11,7 +11,7 @@ from app.core.base import Base
 from alembic import context
 
 
-
+# render_as_batch = True
 
 target_metadata = Base.metadata
 

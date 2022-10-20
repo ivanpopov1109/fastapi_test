@@ -1,7 +1,7 @@
 from app.core.db import engine, SessionLocal
 from sqlalchemy.sql import text
-from app.models.library import Books, Users
-from app.schemas.library import BookCreate, UserCreate, UserUpdate
+from app.models.user import Books, Users
+from app.schemas.user import BookCreate, UserCreate, UserUpdate
 from typing import Optional
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
@@ -98,6 +98,18 @@ def check_user_mail(user_mail:str)->None:
             detail='Пользователь с таким email существует!',
         )
 
+def delete_user(user: Users):
+    with SessionLocal() as session:
+        session.delete(user)
+        session.commit()
+        return user
+
+
+def check_user_exists(user_id: int)->Users:
+    user = get_user_by_id(user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User не найден!")
+    return user
 
 if __name__ == "__main__":
     read_all_users_from_db()
