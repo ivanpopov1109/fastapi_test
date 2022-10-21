@@ -1,7 +1,6 @@
-from app.core.db import engine, SessionLocal
-from sqlalchemy.sql import text
-from app.models.user import Books, Users
-from app.schemas.user import BookCreate, UserCreate, UserUpdate
+from app.core.db import SessionLocal
+from app.models.user import  Users
+from app.schemas.user import UserCreate, UserUpdate
 from typing import Optional
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder

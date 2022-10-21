@@ -1,14 +1,6 @@
 from pydantic import BaseModel, Field, validator
 from typing import Optional
 
-
-class BookCreate(BaseModel):
-    author: str = Field(..., min_length=1, max_length=100)
-    book_name: str = Field(..., min_length=1, max_length=100)
-    pages: int
-    owner_id: int
-
-
 class UserBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     mail: str = Field(..., min_length=1, max_length=100)
