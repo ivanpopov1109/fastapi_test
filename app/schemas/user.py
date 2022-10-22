@@ -23,7 +23,7 @@ class UserUpdate(UserBase):
     def pass_cannot_be_null(cls, value):
         if value is None:
             raise ValueError('Пароль не может быть пустым!')
-            return value
+        return value
 
     password: Optional[str] = Field(None, min_length=1, max_length=100)
     name: Optional[str] = Field(None,  min_length=1, max_length=100)

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
-
 from app.crud.user import user_crud
 from app.schemas.user import UserCreate, UserDB, UserUpdate
 from app.crud.book import book_crud
 from app.schemas.book import *
+from app.api.validators import check_user_exists, check_user_mail
 
 
 router = APIRouter()
@@ -27,21 +27,18 @@ def get_all_users():
 
 @router.patch('/{user_id}')
 def partially_update_user(user_id: int, obj_in: UserUpdate):
-    user = user_crud.check_user_exists(user_id)
+    user = check_user_exists(user_id)
     if obj_in.mail is not None:
-        user_crud.check_user_mail(obj_in.mail)
+        check_user_mail(obj_in.mail)
     user_update = user_crud.update(user, obj_in)
     print(user_update)
     return user_update
 
 @router.delete('/{user_id}', response_model=UserDB, response_model_exclude_none= True)
 def remove_user(user_id: int):
-    user = user_crud.check_user_exists(user_id)
+    user = check_user_exists(user_id)
     user = user_crud.remove(user)
     return user
-
-
-
 
 
 @router.post('/book/',
