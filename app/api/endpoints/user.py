@@ -8,7 +8,7 @@ from app.api.validators import check_user_exists, check_user_mail
 
 router = APIRouter()
 
-@router.post('/users/',
+@router.post('/user/',
              response_model= UserDB,
              response_model_exclude_none=True)
 def create_new_user(user: UserCreate):
@@ -19,7 +19,7 @@ def create_new_user(user: UserCreate):
     new_user = user_crud.create(user)
     return new_user
 
-@router.get('/users/', response_model=list[UserDB],
+@router.get('/user/', response_model=list[UserDB],
             response_model_exclude_none=True)
 def get_all_users():
     all_users = user_crud.get_multi()
@@ -31,22 +31,19 @@ def partially_update_user(user_id: int, obj_in: UserUpdate):
     if obj_in.mail is not None:
         check_user_mail(obj_in.mail)
     user_update = user_crud.update(user, obj_in)
-    print(user_update)
     return user_update
 
-@router.delete('/{user_id}', response_model=UserDB, response_model_exclude_none= True)
+@router.delete('/{user_id}',
+               response_model=UserDB,
+               response_model_exclude_none= True)
 def remove_user(user_id: int):
+    print(user_id)
     user = check_user_exists(user_id)
     user = user_crud.remove(user)
     return user
 
 
-@router.post('/book/',
-             response_model= BookDB,
-             response_model_exclude_none=True)
-def create_new_user(book: BookCreate):
-    new_book = book_crud.create(book)
-    return new_book
+
 
 
 

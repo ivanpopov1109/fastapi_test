@@ -3,3 +3,5 @@ from app.models.card import Card
 
 class CRUDCard(CRUDBase):
     pass
+
+card_crud = CRUDCard(Card)
